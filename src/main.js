@@ -19,9 +19,14 @@ function rmvLoading() {
   const loading = document.querySelector('.loading');
   loading.remove();
 }
-const listComputer = await fetchProductsList('computador');
-listComputer.map((element) => {
+
+try {
+  const listComputer = await fetchProductsList('computador');
   rmvLoading();
-  const addProd = sectionPai.appendChild(createProductElement(element));
-  return addProd;
-});
+  listComputer.map((element) => sectionPai.appendChild(createProductElement(element)));
+} catch (error) {
+  const divErro = document.createElement('div');
+  divErro.textContent = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  divErro.classList.add('error');
+  sectionContainer.appendChild(divErro);
+}

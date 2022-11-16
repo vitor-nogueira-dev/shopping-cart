@@ -13,6 +13,7 @@ export const fetchProductsList = async (categoria) => {
     const dados = data.results;
     return dados;
   } catch (error) {
-    return error.message;
+    // exibeMensagem();
+    return exibeMensagem();
   }
 };
