@@ -21,6 +21,6 @@ describe("Implementando testes para fetchProduct()", () => {
     expect(chamadaFuncao).toEqual(product);
   })
   it('Testando se a função sem parâmetro retorna um erro', async () => {
-    await expect(fetchProduct()).rejects.toThrow(); // podemos testar colocando a frase ai dentro tbm 'ID não informado'
+    await expect(fetchProduct()).rejects.toThrow();
   })
 });
