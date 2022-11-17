@@ -5,7 +5,7 @@ import {
   createProductElement,
   createCartProductElement,
 } from './helpers/shopFunctions';
-import { saveCartID } from './helpers/cartFunctions';
+import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 
 const descendentes = document.querySelectorAll('.products');
 console.log(descendentes);
@@ -48,3 +48,12 @@ try {
   divErro.classList.add('error');
   sectionContainer.appendChild(divErro);
 }
+
+const pai = document.querySelector('.cart__products');
+const produtosLocalStorage = getSavedCartIDs();
+// console.log(arrayProdutosLS);
+const array = produtosLocalStorage.map((produto) => fetchProduct(produto));
+const produtos = await Promise.all(array);
+console.log(produtos);
+produtos
+  .forEach((produto) => pai.appendChild(createCartProductElement(produto)));
