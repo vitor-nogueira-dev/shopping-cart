@@ -85,9 +85,22 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
     'material-icons cart__product__remove',
     'delete',
   );
-  li.appendChild(removeButton);
 
-  li.addEventListener('click', () => removeCartProduct(li, id));
+  li.appendChild(removeButton);
+  li.addEventListener('click', () => {
+    const priceProduct = localStorage.getItem('totalPrice');
+    const count = priceProduct - price;
+    const spanPrice = document.querySelector('.total-price');
+    const rest = count.toFixed(2);
+    localStorage.setItem('totalPrice', rest);
+    spanPrice.innerHTML = rest;
+  });
+  li.addEventListener('click', () => {
+    // console.log(price);
+    removeCartProduct(li, id);
+
+    // removeCartProduct(li, price);
+  });
   return li;
 };
 

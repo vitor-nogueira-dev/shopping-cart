@@ -7,23 +7,12 @@ import {
 } from './helpers/shopFunctions';
 import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 
-const descendentes = document.querySelectorAll('.products');
-console.log(descendentes);
-descendentes.forEach((button) => {
-  button.addEventListener('click', async (event) => {
-    const olPai = document.querySelector('.cart__products');
-    if (event.target) {
-      const spanId = event.target.parentNode.firstChild.textContent;
-      saveCartID(spanId);
-      const retorno = await fetchProduct(spanId);
-      olPai.appendChild(createCartProductElement(retorno));
-    }
-  });
-});
-
 document.querySelector('.cep-button').addEventListener('click', searchCep);
-const sectionPai = document.querySelector('.products');
+
 const sectionContainer = document.querySelector('.container');
+const containerCart = document.querySelector('.cart__products');
+const sectionProducts = document.querySelector('.products');
+const spanPrice = document.querySelector('.total-price');
 
 function addLoading() {
   const loading = document.createElement('section');
@@ -41,19 +30,37 @@ function rmvLoading() {
 try {
   const listComputer = await fetchProductsList('computador');
   rmvLoading();
-  listComputer.map((element) => sectionPai.appendChild(createProductElement(element)));
+  listComputer
+    .map((element) => sectionProducts
+      .appendChild(createProductElement(element)));
 } catch (error) {
   const divErro = document.createElement('div');
-  divErro.textContent = 'Algum erro ocorreu, recarregue a página e tente novamente';
   divErro.classList.add('error');
+  divErro.textContent = 'Algum erro ocorreu, recarregue a página e tente novamente';
   sectionContainer.appendChild(divErro);
 }
 
-const pai = document.querySelector('.cart__products');
-const produtosLocalStorage = getSavedCartIDs();
-// console.log(arrayProdutosLS);
-const array = produtosLocalStorage.map((produto) => fetchProduct(produto));
-const produtos = await Promise.all(array);
-console.log(produtos);
-produtos
-  .forEach((produto) => pai.appendChild(createCartProductElement(produto)));
+getSavedCartIDs()
+  .forEach(async (produto) => {
+    const product = await fetchProduct(produto);
+    containerCart
+      .appendChild(createCartProductElement(product));
+    spanPrice.innerHTML = localStorage.getItem('totalPrice');
+  });
+
+const arraySum = [];
+
+document.querySelectorAll('.product__add')
+  .forEach((element) => element.addEventListener('click', async () => {
+    const idProduct = element.parentNode.querySelector('.product__id').textContent;
+    const value = element.parentNode.querySelector('.product__price__value').textContent;
+    arraySum.push(Number(value));
+    saveCartID(idProduct);
+    const produto = await fetchProduct(idProduct);
+    containerCart
+      .appendChild(createCartProductElement(produto));
+    const soma = arraySum
+      .reduce((acc, curr) => acc + curr, 0);
+    spanPrice.textContent = soma.toFixed(2);
+    localStorage.setItem('totalPrice', soma);
+  }));
