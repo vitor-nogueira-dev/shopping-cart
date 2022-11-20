@@ -83,9 +83,9 @@ document
   .forEach((element) => element
     .addEventListener('click', async () => {
       const id = element.parentNode
-        .firstChild.textContent;
+        .querySelector('.product__id').textContent;
       const price = element.parentNode
-        .firstChild.textContent;
+        .querySelector('.product__price__value').textContent;
 
       arraySum
         .push(Number(price));
