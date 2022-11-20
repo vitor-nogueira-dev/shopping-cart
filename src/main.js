@@ -7,23 +7,34 @@ import {
 } from './helpers/shopFunctions';
 import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 
-document.querySelector('.cep-button').addEventListener('click', searchCep);
+document
+  .querySelector('.cep-button')
+  .addEventListener('click', searchCep);
 
-const sectionContainer = document.querySelector('.container');
-const containerCart = document.querySelector('.cart__products');
-const sectionProducts = document.querySelector('.products');
-const spanPrice = document.querySelector('.total-price');
+const sectionContainer = document
+  .querySelector('.container');
+const containerCart = document
+  .querySelector('.cart__products');
+const sectionProducts = document
+  .querySelector('.products');
+const spanPrice = document
+  .querySelector('.total-price');
 
 function addLoading() {
-  const loading = document.createElement('section');
-  loading.classList.add('loading');
-  loading.textContent = 'carregando...';
-  sectionContainer.appendChild(loading);
+  const loading = document
+    .createElement('section');
+  loading
+    .classList.add('loading');
+  loading
+    .textContent = 'carregando...';
+  sectionContainer
+    .appendChild(loading);
 }
 addLoading();
 
 function rmvLoading() {
-  const loading = document.querySelector('.loading');
+  const loading = document
+    .querySelector('.loading');
   loading.remove();
 }
 
@@ -34,10 +45,14 @@ try {
     .map((element) => sectionProducts
       .appendChild(createProductElement(element)));
 } catch (error) {
-  const divErro = document.createElement('div');
-  divErro.classList.add('error');
-  divErro.textContent = 'Algum erro ocorreu, recarregue a página e tente novamente';
-  sectionContainer.appendChild(divErro);
+  const divErro = document
+    .createElement('div');
+  divErro
+    .classList.add('error');
+  divErro
+    .textContent = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  sectionContainer
+    .appendChild(divErro);
 }
 
 getSavedCartIDs()
@@ -45,22 +60,36 @@ getSavedCartIDs()
     const product = await fetchProduct(produto);
     containerCart
       .appendChild(createCartProductElement(product));
-    spanPrice.innerHTML = localStorage.getItem('totalPrice');
+    spanPrice.innerHTML = localStorage
+      .getItem('totalPrice');
   });
 
 const arraySum = [];
 
-document.querySelectorAll('.product__add')
-  .forEach((element) => element.addEventListener('click', async () => {
-    const idProduct = element.parentNode.querySelector('.product__id').textContent;
-    const value = element.parentNode.querySelector('.product__price__value').textContent;
-    arraySum.push(Number(value));
-    saveCartID(idProduct);
-    const produto = await fetchProduct(idProduct);
-    containerCart
-      .appendChild(createCartProductElement(produto));
-    const soma = arraySum
-      .reduce((acc, curr) => acc + curr, 0);
-    spanPrice.textContent = soma.toFixed(2);
-    localStorage.setItem('totalPrice', soma);
-  }));
+async function addProductCart(id) {
+  const produto = await fetchProduct(id);
+  containerCart
+    .appendChild(createCartProductElement(produto));
+  const soma = arraySum
+    .reduce((acc, curr) => acc + curr, 0);
+  spanPrice.textContent = soma
+    .toFixed(2);
+  localStorage
+    .setItem('totalPrice', soma);
+}
+
+document
+  .querySelectorAll('.product__add')
+  .forEach((element) => element
+    .addEventListener('click', async () => {
+      const id = element.parentNode
+        .firstChild.textContent;
+      const price = element.parentNode
+        .firstChild.textContent;
+
+      arraySum
+        .push(Number(price));
+
+      saveCartID(id);
+      addProductCart(id);
+    }));

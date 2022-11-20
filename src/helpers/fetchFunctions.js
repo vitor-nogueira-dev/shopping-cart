@@ -10,7 +10,7 @@ export const fetchProduct = async (idProduct) => {
 };
 // await fetchProduct('MLB2961982059');
 export const fetchProductsList = async (categoria) => {
-  if (categoria === undefined) {
+  if (!categoria) {
     throw new Error('Termo de busca não informado');
   }
   const URL_PRODUCT_LIST = `https://api.mercadolibre.com/sites/MLB/search?q=${categoria}`;

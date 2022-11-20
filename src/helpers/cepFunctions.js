@@ -6,10 +6,17 @@ function addLoading() {
   displayText.textContent = 'CEP não encontrado';
 }
 
-export const getAddress = (data) => {
-  const rua = data.street || data.address;
-  const bairro = data.district || data.neighborhood;
-  displayText.innerHTML = `${rua} - ${bairro} - ${data.city} - ${data.state}`;
+export const getAddress = ({
+  street,
+  address,
+  district,
+  neighborhood,
+  city,
+  state,
+}) => {
+  const rua = street || address;
+  const bairro = district || neighborhood;
+  displayText.innerHTML = `${rua} - ${bairro} - ${city} - ${state}`;
 };
 
 export const searchCep = () => {

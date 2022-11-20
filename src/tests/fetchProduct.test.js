@@ -21,6 +21,10 @@ describe("Implementando testes para fetchProduct()", () => {
     expect(chamadaFuncao).toEqual(product);
   })
   it('Testando se a função sem parâmetro retorna um erro', async () => {
-    await expect(fetchProduct()).rejects.toThrow();
+    try {
+     await fetchProduct()
+    } catch(error) {
+      expect(error.message).toBe('ID não informado');
+    }
   })
 });
