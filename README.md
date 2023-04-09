@@ -18,7 +18,7 @@ npm run dev
 ---
 <details>
 <summary><span style="font-size: 1.5rem;"> 👨🏼‍💻 Proposta</span></summary>
-  - Criar um carrinho de compras
+  - Criar um carrinho de compras </br>
   - Consumir a API do Mercado Livre para alimentar os produtos </br>
   - Adicionar as funcionalidades de adicionar e remover do carrinho </br>
   - Adicionar a funcionalidade de soma a cada adição e/ou remoção do carrinho 
