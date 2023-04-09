@@ -13,10 +13,10 @@ describe("Implementando testes para fetchProduct()", () => {
   });
   it('Verificando se a função fethProduct() com MLB1405519561 a função utiliza o endpoint', async () => {
     const idProduct = 'MLB1405519561';
-    await fetchProduct('MLB1405519561')
-    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1405519561')
+    await fetchProduct(idProduct)
+    expect(fetch).toHaveBeenCalledWith(`https://api.mercadolibre.com/items/${idProduct}`)
   })
-  it('Testando se o retorno da função fetchProduct com o parâmetro MLB1405519561 é uma estrutura igual ao objeto ITEM', async () => {
+  it('Testando se o retorno da função fetchProduct com o parâmetro MLB1405519561 é uma estrutura igual ao objeto product', async () => {
     const chamadaFuncao = await fetchProduct('MLB1405519561')
     expect(chamadaFuncao).toEqual(product);
   })

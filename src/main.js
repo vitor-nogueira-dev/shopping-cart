@@ -30,7 +30,7 @@ function addLoading() {
   sectionContainer
     .appendChild(loading);
 }
-addLoading();
+addLoading(); // window.onload
 
 function rmvLoading() {
   const loading = document
@@ -77,7 +77,6 @@ async function addProductCart(id) {
   localStorage
     .setItem('totalPrice', soma);
 }
-
 document
   .querySelectorAll('.product__add')
   .forEach((element) => element

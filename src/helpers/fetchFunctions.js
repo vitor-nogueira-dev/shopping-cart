@@ -3,7 +3,7 @@ export const fetchProduct = async (idProduct) => {
     throw new Error('ID não informado');
   }
   const URL_PRODUCT = `https://api.mercadolibre.com/items/${idProduct}`;
-  const promisse = await fetch(URL_PRODUCT);
+  const promisse = await fetch(URL_PRODUCT); // promisse.ok
   const data = await promisse.json();
   // console.log(data);
   return data;

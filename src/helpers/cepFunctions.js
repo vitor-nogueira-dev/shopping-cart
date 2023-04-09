@@ -6,14 +6,8 @@ function addLoading() {
   displayText.textContent = 'CEP não encontrado';
 }
 
-export const getAddress = ({
-  street,
-  address,
-  district,
-  neighborhood,
-  city,
-  state,
-}) => {
+export const getAddress = ({ street, address, city, state, district, neighborhood }) => {
+  if (!street) return addLoading();
   const rua = street || address;
   const bairro = district || neighborhood;
   displayText.innerHTML = `${rua} - ${bairro} - ${city} - ${state}`;
